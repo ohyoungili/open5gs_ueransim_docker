@@ -1,0 +1,18 @@
+### For reference, see `/opt/open5gs/etc/orig/open5gs/`
+upf:
+    pfcp:
+      - addr: 192.168.0.108
+    gtpu:
+      - addr: 192.168.0.108
+    subnet:
+      - addr: 10.47.0.1/16
+        dnn: ims
+      #- addr: cafe::1/64
+        dev: ogstun3
+smf:
+    pfcp:
+#      - name: smf
+      - addr: 192.168.0.104
+parameter:
+max:
+pool:

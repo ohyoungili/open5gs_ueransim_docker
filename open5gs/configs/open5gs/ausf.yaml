@@ -1,0 +1,13 @@
+### For reference, see `/opt/open5gs/etc/orig/open5gs/`
+ausf:
+  sbi:
+    - addr: 192.168.0.111
+      port: 7777
+nrf:
+  sbi:
+    - addr: 192.168.0.110
+      port: 7777
+parameter:
+max:
+pool:
+time:

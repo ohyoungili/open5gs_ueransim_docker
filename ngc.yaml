@@ -1,0 +1,157 @@
+version: '3'
+networks:
+  open5gsnetwork:
+    ipam:
+      config:
+        - subnet: 192.168.0.0/24
+services: 
+  mongo:
+    image: mongo
+    container_name: mongo
+    environment:
+      MONGO_INITDB_DATABASE: open5gs
+    networks:
+      open5gsnetwork:
+        ipv4_address: 192.168.0.150
+  amf:
+    image: open5gs_upf1:2.3.0
+    container_name: amf
+    command: 
+      - open5gs-amfd 
+    restart : on-failure
+    networks:
+      open5gsnetwork:
+        ipv4_address: 192.168.0.105
+  ausf:
+    image: open5gs_upf1:2.3.0
+    container_name: ausf
+    command: 
+      - open5gs-ausfd
+    restart : on-failure
+    networks:
+      open5gsnetwork:
+        ipv4_address: 192.168.0.111
+  nrf:
+    image: open5gs_upf1:2.3.0
+    container_name: nrf
+    command: open5gs-nrfd   
+    restart : on-failure 
+ #   ports:
+ #     - 7777:7777
+    networks:
+      open5gsnetwork:
+        ipv4_address: 192.168.0.110
+  nssf:
+    image: open5gs_upf1:2.3.0
+    container_name: nssf
+    command: open5gs-nssfd   
+    restart : on-failure
+    networks:
+      open5gsnetwork:
+        ipv4_address: 192.168.0.114 
+  pcf:
+    image: open5gs_upf1:2.3.0
+    container_name: pcf
+    command: 
+      - open5gs-pcfd
+    environment:
+      DB_URI: mongodb://mongo/open5gs
+    restart : on-failure
+    networks:
+      open5gsnetwork:
+        ipv4_address: 192.168.0.113
+  #pcrf:
+  #  image: open5gs_upf1:2.3.0
+  #  container_name: pcrf
+  #  command: ["open5gs-pcrfd"]
+  #  environment:
+  #    DB_URI: mongodb://mongo/open5gs
+ #   restart: on-failure
+ #   networks:
+ #     open5gsnetwork:
+ #       ipv4_address: 192.168.0.125
+  smf:
+    image: open5gs_upf1:2.3.0
+    container_name: smf
+    command: open5gs-smfd    
+    restart : on-failure 
+    networks:
+      open5gsnetwork:
+        ipv4_address: 192.168.0.104
+  udm:
+    image: open5gs_upf1:2.3.0
+    container_name: udm
+    restart: on-failure
+    command: 
+      - open5gs-udmd
+    networks:
+      open5gsnetwork:
+        ipv4_address: 192.168.0.112
+  udr:
+    image: open5gs_upf1:2.3.0
+    container_name: udr
+    restart: on-failure
+    environment:
+      DB_URI: mongodb://mongo/open5gs
+    command: 
+      - open5gs-udrd
+    networks:
+      open5gsnetwork:
+        ipv4_address: 192.168.0.120
+  upf1:
+    image: open5gs_upf1:2.3.0
+    container_name: upf1
+    command:
+      - open5gs-upfd
+    cap_add:
+      - all
+    privileged: true
+    restart: on-failure
+#    ports:
+#      - 2152:2152
+    networks:
+      open5gsnetwork:
+        ipv4_address: 192.168.0.107
+  upf2:
+    image: open5gs_upf2:2.3.0
+    container_name: upf2
+    command:
+      - open5gs-upfd
+    cap_add:
+      - all
+    privileged: true
+    restart: on-failure
+#    ports:
+#      - 2152:2152
+    networks:
+      open5gsnetwork:
+        ipv4_address: 192.168.0.108
+  bsf:
+    image: open5gs_upf1:2.3.0
+    container_name: bsf
+    restart: on-failure
+    environment:
+      DB_URI: mongodb://mongo/open5gs
+    command: 
+      - open5gs-bsfd
+    networks:
+      open5gsnetwork:
+        ipv4_address: 192.168.0.115
+  webui:
+    image: open5gs-webui:2.3.0  
+    container_name: webui
+    restart: on-failure
+    environment:
+      DB_URI: mongodb://mongo/open5gs
+    ports:
+      - 3000:3000
+    networks:
+      open5gsnetwork:
+        ipv4_address: 192.168.0.130
+#  portainer:
+#    image: portainer/portainer-ce
+#    container_name: portainer
+#    ports:
+#    - 9000:9000
+#    volumes:
+#    - /var/run/docker.sock:/var/run/docker.sock

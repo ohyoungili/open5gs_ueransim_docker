@@ -1,0 +1,23 @@
+### For reference, see `/opt/open5gs/etc/orig/open5gs/`
+nssf:
+  sbi: 
+    - addr: 192.168.0.114
+      port: 7777
+  nsi:
+#    - name: nrf 
+    - addr: ::1
+#    - addr: 192.168.0.110 
+      port: 7777
+      s_nssai:
+        sst: 1
+ #       sd: 1
+
+nrf:
+  sbi:
+#   - name: nrf
+    - addr: 192.168.0.110
+      port: 7777
+parameter:
+max:
+pool:
+time:

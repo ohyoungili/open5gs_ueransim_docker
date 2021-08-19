@@ -1,0 +1,45 @@
+### For reference, see `/opt/open5gs/etc/orig/open5gs/`
+smf:
+  sbi:
+    - addr: 192.168.0.104
+      port: 7777
+  pfcp:
+    - addr: 192.168.0.104
+  gtpc:
+    - addr: 192.168.0.104
+  gtpu:
+    - addr: 192.168.0.104
+  subnet:
+    - addr: 10.45.0.1/16
+    #- addr: cafe::1/64
+      dnn: internet
+    - addr: 10.46.0.1/16
+      dnn: internet2
+    - addr: 10.47.0.1/16
+      dnn: ims
+  dns:
+    - 8.8.8.8
+    - 8.8.4.4
+    #- 2001:4860:4860::8888
+    #- 2001:4860:4860::8844
+  mtu: 1400
+  freeDiameter: smf.conf
+
+nrf:
+  sbi:
+#    - name: nrf
+    - addr: 192.168.0.110
+      port: 7777
+upf:
+  pfcp:
+#    - name: upf
+    - addr: 192.168.0.107
+#      dnn: internet
+      dnn: [internet, internet2]
+    - addr: 192.168.0.108 # another upf container 
+      dnn: ims
+
+parameter:
+max:
+pool:
+time:
